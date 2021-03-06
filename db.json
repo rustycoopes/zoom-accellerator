@@ -1,0 +1,16 @@
+{
+  "contacts": [
+    {
+      "id": 1,
+      "name": "Russ Room",
+      "roomId": "556694934934",
+      "roomPwd": ""
+    },
+    {
+      "id": 3,
+      "name": "Chris Conway",
+      "roomId": "1212212134",
+      "roomPwd": ""
+    }
+  ]
+}
