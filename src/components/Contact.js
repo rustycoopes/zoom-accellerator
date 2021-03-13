@@ -4,7 +4,7 @@ export const Contact = ({contact, onDelete, onOpen}) => {
     return (
         <div className='task'>
             <h1>
-            <a href={`https://nwm.zoom.us/j/${contact.roomId}`}>
+            <a href={`https://nwm.zoom.us/j/${contact.roomId}`} target="_blank">
             <FaIdCard 
                 style={{cursor:'pointer'}} 
                 onClick={()=>onOpen(contact._id)}/> 
