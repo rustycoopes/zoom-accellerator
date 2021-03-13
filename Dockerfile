@@ -1,6 +1,6 @@
-FROM node:14
+FROM node:14 as  build
 
-
+# build environment
 COPY . /src
 WORKDIR /src
 
@@ -8,12 +8,13 @@ WORKDIR /src
 RUN npm install
 RUN npm install react-scripts
 RUN npm run build
+
+
+# production environment
+FROM node:14 as  prod
+COPY --from=build /src/build /app
 RUN npm install -g serve
-
-COPY build /app
 WORKDIR /app
-
-ENV PORT 8080
-EXPOSE 8080
-
-CMD [ "serve", "-s build" ]
+ENV PORT 8002
+EXPOSE 8002
+CMD [ "serve", "-s" ,"build" ]
