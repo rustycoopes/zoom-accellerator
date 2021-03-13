@@ -3,8 +3,11 @@ import {useState, useEffect} from 'react'
 import Header from './components/Header'
 import Contacts from './components/Contacts'
 import AddContact from './components/AddContact'
+//require('dotenv').config()
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8001/'
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001/'
+console.log('backend url ', BACKEND_URL)
+
 function App() {
 
   const [showAddContact, setShowAddContact ] = useState(false)
@@ -74,8 +77,14 @@ function App() {
           onDelete={deleteContact} 
           onOpen={openContact}/>
           :
-          'No Contacts setup'
+          'No Contacts setup.'
         }
+        
+        <label className="footer" style={{fontSize:10}}>Rustyware 2020</label><br/>
+
+        <label className="footer" style={{fontSize:8}}>Backend = {BACKEND_URL}</label>
+
+
         </div>
   );
 }
