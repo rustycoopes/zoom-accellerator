@@ -1,20 +1,17 @@
-FROM node:14 as  build
+FROM node:14-alpine as build
 
+ENV NODE_ENV=production
 # build environment
-COPY . /src
-WORKDIR /src
-
-
+WORKDIR /app
+COPY . /app
 RUN npm install
-RUN npm install react-scripts
 RUN npm run build
-
+CMD [ "npm", "run", "start" ]
 
 # production environment
-FROM node:14 as  prod
-COPY --from=build /src/build /app
-RUN npm install -g serve
-WORKDIR /app
-ENV PORT 8002
-EXPOSE 8002
-CMD [ "serve", "-s" ,"build" ]
+
+# production env
+FROM nginx:stable-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
