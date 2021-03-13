@@ -6,7 +6,7 @@ function Contacts({contacts, onDelete, onOpen}) {
         <>
           {contacts.map((contact) =>(
           <Contact 
-            key={contact.id} 
+            key={contact._id} 
             contact={contact} 
             onDelete={onDelete} 
             onOpen={onOpen}/>))
