@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react'
 import Header from './components/Header'
 import Contacts from './components/Contacts'
 import AddContact from './components/AddContact'
+import Filter from './components/Filter'
 //require('dotenv').config()
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001/'
@@ -12,6 +13,7 @@ function App() {
 
   const [showAddContact, setShowAddContact ] = useState(false)
   const [contacts, setContacts] = useState([])
+  const [filterText, setFilterText] = useState([])
 
   useEffect(()=> {
     const getContacts = async() => {
@@ -59,6 +61,14 @@ function App() {
     setContacts([...contacts, data])
   }
 
+  const onFilter =(searchValue) => {
+    setFilterText(searchValue)
+  }
+  const getFilteredContacts = ()=>{
+    console.log(filterText)
+    let filteredContacts = contacts.filter((contact) => { return contact.name.toLowerCase().indexOf(filterText.toLowerCase()) !==-1 })
+    return filteredContacts
+  }
 
   return (
     <div className="container">
@@ -70,14 +80,18 @@ function App() {
         />
       
         { showAddContact && <AddContact onAdd={addContact}/> }
+        
+        <Filter onChange={onFilter}/>
 
-        { contacts.length > 0 ?
-        <Contacts 
-          contacts={contacts}  
-          onDelete={deleteContact} 
-          onOpen={openContact}/>
-          :
-          'No Contacts setup.'
+        { 
+          getFilteredContacts().length > 0 ?
+        
+          <Contacts 
+            contacts={getFilteredContacts()}  
+            onDelete={deleteContact} 
+            onOpen={openContact}/>
+            :
+            'No Contacts setup.'
         }
         
         <label className="footer" style={{fontSize:10}}>Rustyware 2020</label><br/>
