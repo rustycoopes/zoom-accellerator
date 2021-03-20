@@ -13,7 +13,7 @@ function App() {
 
   const [showAddContact, setShowAddContact ] = useState(false)
   const [contacts, setContacts] = useState([])
-  const [filterText, setFilterText] = useState([])
+  const [filterText, setFilterText] = useState('')
 
   useEffect(()=> {
     const getContacts = async() => {
@@ -66,7 +66,7 @@ function App() {
   }
   const getFilteredContacts = ()=>{
     console.log(filterText)
-    let filteredContacts = contacts.filter((contact) => { return contact.name.toLowerCase().indexOf(filterText.toLowerCase()) !==-1 })
+    const filteredContacts = contacts.filter((contact) => { return contact.name.toLowerCase().indexOf(filterText.toLowerCase()) !==-1 })
     return filteredContacts
   }
 
