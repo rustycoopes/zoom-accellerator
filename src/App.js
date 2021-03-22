@@ -4,7 +4,7 @@ import Header from './components/Header'
 import Contacts from './components/Contacts'
 import AddContact from './components/AddContact'
 import Filter from './components/Filter'
-import Login from './components/Login'
+import { Helmet } from 'react-helmet'
 import Dialog from './components/Dialog'
 
 
@@ -78,7 +78,6 @@ function App() {
     setFilterText(searchValue)
   }
   const getFilteredContacts = ()=>{
-    console.log(filterText)
     const filteredContacts = contacts.filter((contact) => { return contact.name.toLowerCase().indexOf(filterText.toLowerCase()) !==-1 })
     return filteredContacts
   }
@@ -107,17 +106,27 @@ function App() {
     setLoginErrorLink('')
   }
 
+  const onLogout =()=>{
+    console.log('logging out !')
+    setCurrentUserName('')
+    setCurrentAccountId('')
+    setContacts([])
+  }
   return (
     <div className="container">
-        { currentUserName !== '' ?
-            <label>Welcome {currentUserName}</label>
-            : <Login onSuccess={onLoginSuccess} onFailure={onLoginFailure}/>
-        }
-
+     
+        <Helmet>
+          <title>Zoom Contacts - RustyWare</title>
+          <meta name="description" content="Rusty Software Zoom contact Manager" />
+        </Helmet>
         <Header 
           title={`Zoom Contacts`} 
           onShowAddPanel={() => setShowAddContact(!showAddContact)}
           showAddContact={!showAddContact} 
+          userName = {currentUserName}
+          onLoginSuccess = {onLoginSuccess}
+          onLoginFailure = {onLoginFailure}
+          onLogoutSuccess= {onLogout}
         />
 
         <Dialog text={loginError} helpLink={loginErrorLink} onClose={onLoginWarningClose}/>

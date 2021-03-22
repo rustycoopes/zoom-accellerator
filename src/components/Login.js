@@ -24,7 +24,6 @@ function Login({onSuccess, onFailure}) {
               //https://developers.google.com/identity/sign-in/web/troubleshooting#third-party_cookies_and_data_blocked
         }//Sites that can
     return( 
-        <div>
             <GoogleLogin
                 clientId={clientId}
                 buttonText="Login with Google"
@@ -33,8 +32,7 @@ function Login({onSuccess, onFailure}) {
                 cookiePolicy={'single_host_origin'}
                 className="btn"
                 isSignedIn={true}
-            />,
-    </div>
+            />
     )
 }
 // client id = 471520477628-8bvcn7rj40su8gu7sk92sv1nfugibprf.apps.googleusercontent.com
