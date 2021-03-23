@@ -23,10 +23,15 @@ const Header = ({title, onShowAddPanel, showAddContact,userName, onLoginSuccess,
             <h1>{title}</h1>
             </div>
            <div className="rTableCell">
+           { userName !== '' ?
             <Button 
                 color={showAddContact ? 'green': 'red'} 
                 text= {showAddContact ? 'Add': 'Close'} 
-                onClick={()=>onShowAddPanel()}/>
+                onClick={()=>onShowAddPanel()} 
+                />
+                :
+                <label></label>
+            }
             </div>
             </div>
             </div>
