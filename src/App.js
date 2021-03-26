@@ -6,8 +6,11 @@ import AddContact from './components/AddContact'
 import Filter from './components/Filter'
 import { Helmet } from 'react-helmet'
 import Dialog from './components/Dialog'
-
-
+import Toggle from './components/Toggler'
+import {ThemeProvider} from "styled-components";
+import { GlobalStyles } from "./components/Globalstyle";
+import { lightTheme, darkTheme } from "./components/Themes"
+import  {useDarkMode} from "./components/useDarkMode"
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001/'
 console.log('backend url ', BACKEND_URL)
@@ -21,6 +24,9 @@ function App() {
   const [currentUserAccount, setCurrentAccountId] = useState(0)
   const [loginError, setLoginError] = useState('')
   const [loginErrorLink, setLoginErrorLink] = useState('')
+  const [theme, themeToggler] = useDarkMode();
+
+  const themeMode = theme === 'light' ? lightTheme : darkTheme
 
   // useEffect(()=> {
   //   const getContacts = async() => {
@@ -113,45 +119,51 @@ function App() {
     setContacts([])
   }
   return (
-    <div className="container">
-     
-        <Helmet>
-          <title>Zoom Contacts - RustyWare</title>
-          <meta name="description" content="Rusty Software Zoom contact Manager" />
-        </Helmet>
-        <Header 
-          title={`Zoom Contacts`} 
-          onShowAddPanel={() => setShowAddContact(!showAddContact)}
-          showAddContact={!showAddContact} 
-          userName = {currentUserName}
-          onLoginSuccess = {onLoginSuccess}
-          onLoginFailure = {onLoginFailure}
-          onLogoutSuccess= {onLogout}
-        />
-
-        <Dialog text={loginError} helpLink={loginErrorLink} onClose={onLoginWarningClose}/>
+    <ThemeProvider theme={themeMode}>
+    <>
+    <GlobalStyles/>
+      <div className="container">
       
-        { showAddContact && <AddContact onAdd={addContact}/> }
+          <Helmet>
+            <title>Zoom Contacts - RustyWare</title>
+            <meta name="description" content="Rusty Software Zoom contact Manager" />
+          </Helmet>
+          <Toggle theme={theme} toggleTheme={themeToggler} />
+          <Header 
+            title={`Zoom Contacts`} 
+            onShowAddPanel={() => setShowAddContact(!showAddContact)}
+            showAddContact={!showAddContact} 
+            userName = {currentUserName}
+            onLoginSuccess = {onLoginSuccess}
+            onLoginFailure = {onLoginFailure}
+            onLogoutSuccess= {onLogout}
+          />
+
+          <Dialog text={loginError} helpLink={loginErrorLink} onClose={onLoginWarningClose}/>
         
-        <Filter onChange={onFilter}/>
+          { showAddContact && <AddContact onAdd={addContact}/> }
+          
+          <Filter onChange={onFilter}/>
 
-        { 
-          getFilteredContacts().length > 0 ?
-        
-          <Contacts 
-            contacts={getFilteredContacts()}  
-            onDelete={deleteContact} 
-            onOpen={openContact}/>
-            :
-            'No Contacts setup.'
-        }
-        
-        <label className="footer" style={{fontSize:10}}>Rustyware 2020</label><br/>
+          { 
+            getFilteredContacts().length > 0 ?
+          
+            <Contacts 
+              contacts={getFilteredContacts()}  
+              onDelete={deleteContact} 
+              onOpen={openContact}/>
+              :
+              'No Contacts setup.'
+          }
+          
+          <label className="footer" style={{fontSize:10}}>Rustyware 2020</label><br/>
 
-        <label className="footer" style={{fontSize:8}}>Backend = {BACKEND_URL}</label>
+          <label className="footer" style={{fontSize:8}}>Backend = {BACKEND_URL}</label>
 
 
-        </div>
+          </div>
+        </>
+    </ThemeProvider>
   );
 }
 

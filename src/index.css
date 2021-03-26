@@ -55,10 +55,13 @@ body {
 }
 
 .task {
-  background: #f4f4f4;
+  overflow: auto;
+  border: 1px solid steelblue;
+  border-radius: 5px;
   margin: 5px;
   padding: 10px 20px;
   cursor: pointer;
+  color: light
 }
 
 .task.reminder {
